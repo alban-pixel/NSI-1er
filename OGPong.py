@@ -33,6 +33,8 @@ y_balle = 40
 dx_balle = 2
 dy_balle = -1
 
+point_player1 = 0
+point_player2 = 0
 
 def update():
     global y_raquette_gauche, y_raquette_droite
@@ -65,6 +67,25 @@ def update():
         dx_balle = 2
         dy_balle = -1
 
+    end_of_round()
+
+def end_of_round():
+    global x_balle, point_player1, point_player2
+
+    if x_balle <= 0:
+        point_player2 +=1
+        init_round()
+    elif x_balle >= 160- TAILLE_BALLE:   
+        point_player1 += 1
+        init_round()
+
+def init_round():
+    x_balle = 60
+    y_balle = 40
+    dx_balle = 2
+    dy_balle = -1
+    
+
 
 def draw():
     pyxel.cls(1)
@@ -76,6 +97,8 @@ def draw():
     pyxel.rect(x_raquette_droite, y_raquette_droite, LARGEUR_RAQUETTE, HAUTEUR_RAQUETTE, 7)
     # Balle
     pyxel.rect(x_balle, y_balle, TAILLE_BALLE, TAILLE_BALLE, 10)
-
+    #point
+    pyxel.text(60,12,str(point_player1),10)
+    pyxel.text(100,12,str(point_player2),10)
 
 pyxel.run(update, draw)
