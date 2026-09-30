@@ -33,10 +33,13 @@ y_balle = 40
 dx_balle = 2
 dy_balle = -1
 
+x_inversed = False
+y_inversed = False
+
 
 def update():
     global y_raquette_gauche, y_raquette_droite
-    global x_balle, y_balle, dx_balle, dy_balle
+    global x_balle, y_balle, dx_balle, dy_balle, x_inversed, y_inversed
 
     # Déplacement de la raquette de gauche
     if pyxel.btn(pyxel.KEY_W):
@@ -55,8 +58,24 @@ def update():
     y_raquette_droite = pyxel.clamp(y_raquette_droite, 0, HAUTEUR - HAUTEUR_RAQUETTE)
 
     # Déplacement de la balle (pour l'instant, rien ne l'arrête)
-    x_balle = x_balle + dx_balle
-    y_balle = y_balle + dy_balle
+    if x_inversed:
+        x_balle = x_balle - dx_balle
+    else:
+        x_balle = x_balle + dx_balle
+    if y_inversed:
+        y_balle = y_balle - dy_balle
+    else:
+        y_balle = y_balle + dy_balle
+
+    if (x_balle >= (x_raquette_droite-4)) and (y_balle >= y_raquette_droite) and (y_balle <= (y_raquette_droite+HAUTEUR_RAQUETTE)):
+        x_inversed = not(x_inversed)
+    if (y_balle == 0):
+        y_inversed = not(y_inversed)
+    if (x_balle == 0):
+        x_inversed = not(x_inversed)
+    if (y_balle == 116):
+        y_inversed = not(y_inversed)
+
 
     # Barre d'espace : on replace la balle au départ
     if pyxel.btnp(pyxel.KEY_SPACE):
