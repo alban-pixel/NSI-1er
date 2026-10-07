@@ -110,6 +110,11 @@ def update():
         dx_balle = 2
         dy_balle = -1
 
+    # Plus le temps passe, plus la balle accélère (toutes les 100 frames)
+    if pyxel.frame_count % 100 == 0 and pyxel.frame_count > 0 and abs(dx_balle) < 5:
+        dx_balle *= 1.1
+        dy_balle *= 1.1
+
 
 def draw():
     pyxel.cls(1)
